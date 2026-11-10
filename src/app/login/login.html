@@ -1,0 +1,71 @@
+
+<div class="login-container">
+
+  <div class="login-card">
+
+    <!-- Branding -->
+    <div class="brand">
+      <h1>People<span>Hub</span></h1>
+      <p>Employee Management System</p>
+    </div>
+
+    <!-- Login Heading -->
+    <div class="login-heading">
+      <h2>Welcome Back!</h2>
+      <p class="subtitle">
+        Sign in to access your PeopleHub account.
+      </p>
+    </div>
+
+    <!-- Login Form -->
+    <form (ngSubmit)="login()">
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+
+        <input
+          id="email"
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          placeholder="Enter your email"
+          autocomplete="username"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+
+        <input
+          id="password"
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          placeholder="Enter your password"
+          autocomplete="current-password"
+          required
+        />
+      </div>
+
+      @if (errorMessage) {
+        <p class="error">
+          {{ errorMessage }}
+        </p>
+      }
+
+      <button type="submit">
+        Sign In
+      </button>
+
+    </form>
+
+    <!-- Signup Link -->
+    <p class="signup-link">
+      Don't have an account?
+      <a routerLink="/signup">Create Account</a>
+    </p>
+
+  </div>
+
+</div>

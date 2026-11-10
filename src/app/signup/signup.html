@@ -1,0 +1,81 @@
+
+<div class="signup-container">
+
+  <div class="signup-card">
+
+    <div class="brand">
+      <h1>People<span>Hub</span></h1>
+      <p>Create your account</p>
+    </div>
+
+    <h2>Get Started</h2>
+    <p class="subtitle">Create an account to access PeopleHub.</p>
+
+    <form (ngSubmit)="signup()">
+
+      <div class="form-group">
+        <label>Full Name</label>
+        <input
+          type="text"
+          name="name"
+          [(ngModel)]="name"
+          placeholder="Enter your full name"
+          required
+          pattern=".*\S.*"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Email Address</label>
+        <input
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          placeholder="Enter your email"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          placeholder="Create a password"
+          minlength="6"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <input
+          type="password"
+          name="confirmPassword"
+          [(ngModel)]="confirmPassword"
+          placeholder="Confirm your password"
+          required
+        />
+      </div>
+
+      <p class="error" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </p>
+
+      <p class="success" *ngIf="successMessage">
+        {{ successMessage }}
+      </p>
+
+      <button type="submit">Create Account</button>
+
+    </form>
+
+    <p class="login-link">
+      Already have an account?
+      <a routerLink="/login">Login</a>
+    </p>
+
+  </div>
+
+</div>

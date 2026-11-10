@@ -1,0 +1,312 @@
+
+<div class="employees-page">
+
+  <!-- Page Heading -->
+  <div class="page-heading">
+
+    <div>
+      <h1>Employee Directory</h1>
+      <p>Manage and maintain your employee records.</p>
+    </div>
+
+    <button
+      type="button"
+      class="add-btn"
+      (click)="openAddForm()"
+    >
+      + Add Employee
+    </button>
+
+  </div>
+
+  <!-- Add / Edit Employee Form -->
+  @if (showAddForm) {
+
+    <div class="form-container">
+
+      <div class="form-heading">
+
+        <div>
+          <h2>
+            {{ isEditMode ? 'Edit Employee' : 'Add New Employee' }}
+          </h2>
+
+          <p>
+            {{ isEditMode
+              ? 'Update the employee details below.'
+              : 'Enter the employee details below.' }}
+          </p>
+        </div>
+
+        <button
+          type="button"
+          class="close-btn"
+          (click)="closeAddForm()"
+        >
+          ✕
+        </button>
+
+      </div>
+
+      @if (formError) {
+        <div class="form-error">
+          {{ formError }}
+        </div>
+      }
+
+      <form
+        [formGroup]="employeeForm"
+        (ngSubmit)="isEditMode ? updateEmployee() : addEmployee()"
+        novalidate
+      >
+
+        <div class="form-grid">
+
+          <!-- Employee Name -->
+          <div class="form-group">
+
+            <label>Employee Name *</label>
+
+            <input
+              type="text"
+              placeholder="Enter employee name"
+              formControlName="name"
+            />
+
+            @if (
+              employeeForm.get('name')?.touched &&
+              employeeForm.get('name')?.invalid
+            ) {
+              <small class="error">
+                Please enter a valid employee name.
+              </small>
+            }
+
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+
+            <label>Email Address *</label>
+
+            <input
+              type="email"
+              placeholder="Enter email address"
+              formControlName="email"
+            />
+
+            @if (
+              employeeForm.get('email')?.touched &&
+              employeeForm.get('email')?.hasError('required')
+            ) {
+              <small class="error">
+                Email address is required.
+              </small>
+            }
+
+            @if (
+              employeeForm.get('email')?.touched &&
+              employeeForm.get('email')?.hasError('email')
+            ) {
+              <small class="error">
+                Please enter a valid email address.
+              </small>
+            }
+
+          </div>
+
+          <!-- Department -->
+          <div class="form-group">
+
+            <label>Department *</label>
+
+            <select formControlName="department">
+
+              <option value="">Select Department</option>
+              <option value="Engineering">Engineering</option>
+              <option value="HR">HR</option>
+              <option value="Finance">Finance</option>
+              <option value="Marketing">Marketing</option>
+
+            </select>
+
+            @if (
+              employeeForm.get('department')?.touched &&
+              employeeForm.get('department')?.invalid
+            ) {
+              <small class="error">
+                Please select a department.
+              </small>
+            }
+
+          </div>
+
+          <!-- Designation -->
+          <div class="form-group">
+
+            <label>Designation *</label>
+
+            <input
+              type="text"
+              placeholder="Enter designation"
+              formControlName="designation"
+            />
+
+            @if (
+              employeeForm.get('designation')?.touched &&
+              employeeForm.get('designation')?.invalid
+            ) {
+              <small class="error">
+                Designation is required.
+              </small>
+            }
+
+          </div>
+
+          <!-- Employment Status -->
+          <div class="form-group">
+
+            <label>Employment Status</label>
+
+            <select formControlName="status">
+
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+
+          <button
+            type="button"
+            class="cancel-btn"
+            (click)="closeAddForm()"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="submit-btn"
+          >
+            {{ isEditMode ? 'Update Employee' : 'Add Employee' }}
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  }
+
+  <!-- Employee Directory -->
+  <div class="employee-table-container">
+
+    <div class="directory-heading">
+      <div>
+        <h2>All Employees</h2>
+        <p>View and manage employee information.</p>
+      </div>
+    </div>
+
+    <!-- Employee Table -->
+    <div class="table-scroll">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>EMPLOYEE</th>
+            <th>DEPARTMENT</th>
+            <th>DESIGNATION</th>
+            <th>STATUS</th>
+            <th>ACTION</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          @for (employee of employees; track employee.id) {
+
+            <tr>
+
+              <td class="employee-info">
+                <strong>{{ employee.name }}</strong>
+                <small>{{ employee.email }}</small>
+              </td>
+
+              <td>
+                {{ employee.department }}
+              </td>
+
+              <td>
+                {{ employee.designation }}
+              </td>
+
+              <td>
+
+                <span
+                  class="status"
+                  [class.active]="employee.status === 'Active'"
+                  [class.inactive]="employee.status === 'Inactive'"
+                >
+                  {{ employee.status }}
+                </span>
+
+              </td>
+
+              <td>
+
+                <div class="action-buttons">
+
+                  <button
+                    type="button"
+                    class="edit-btn"
+                    (click)="editEmployee(employee)"
+                  >
+                    Edit
+                  </button>
+
+                  <button
+                    type="button"
+                    class="delete-btn"
+                    (click)="deleteEmployee(employee.id)"
+                  >
+                    Delete
+                  </button>
+
+                </div>
+
+              </td>
+
+            </tr>
+
+          } @empty {
+
+            <tr>
+              <td colspan="5" class="empty-message">
+                No employees found. Click Add Employee to create a record.
+              </td>
+            </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+    <div class="table-footer">
+      Total Employees: {{ employees.length }}
+    </div>
+
+  </div>
+
+</div>

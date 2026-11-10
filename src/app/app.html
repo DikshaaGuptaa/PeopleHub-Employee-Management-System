@@ -1,0 +1,83 @@
+
+@if (showMainLayout) {
+
+  <div class="app-container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+      <div class="logo">
+        <div class="logo-icon">P</div>
+        <span>PeopleHub</span>
+      </div>
+
+      <div class="menu-section">
+
+        <p class="menu-heading">MAIN MENU</p>
+
+        <a
+          class="menu-item"
+          routerLink="/employees"
+          routerLinkActive="active"
+        >
+          <span>♙</span>
+          Employees
+        </a>
+
+        <a
+          class="menu-item"
+          routerLink="/profile"
+          routerLinkActive="active"
+        >
+          <span>◉</span>
+          My Profile
+        </a>
+
+      </div>
+
+  
+      <div class="sidebar-footer">
+
+        <div class="profile-avatar">DG</div>
+
+        <div class="user-info">
+          <strong>Admin User</strong>
+          <small>Administrator</small>
+        </div>
+
+        <button class="logout-button" (click)="logout()">
+          <span>↪</span>
+          Logout
+        </button>
+
+      </div>
+
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+      <header class="topbar">
+
+        <div>
+          <h2>PeopleHub</h2>
+          <p>Employee Management System</p>
+        </div>
+
+        <div class="topbar-right">
+          <div class="profile-avatar">DG</div>
+        </div>
+
+      </header>
+
+      <router-outlet></router-outlet>
+
+    </main>
+
+  </div>
+
+} @else {
+
+  <router-outlet></router-outlet>
+
+}
